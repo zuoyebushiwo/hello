@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/zuoyebushiwo/hello"
+	"github.com/zuoyebushiwo/hello/hello"
 )
 
 func TestHello(t *testing.T) {

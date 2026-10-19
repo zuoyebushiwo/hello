@@ -5,7 +5,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/zuoyebushiwo/hello"
+	"github.com/zuoyebushiwo/hello/hello"
 )
 
 var name string
