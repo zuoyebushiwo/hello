@@ -136,8 +136,9 @@ func main() {
 	lab.Check(attempts == 3 && last == nil, "只在 retryable 时继续，永久错误立即失败")
 
 	lab.Section("Java → Go 对照")
-	lab.Infof("throw new XxxException(cause)  ≈  fmt.Errorf(\"...: %w\", err) 或自定义类型 + Unwrap")
-	lab.Infof("catch (XxxException e)         ≈  errors.As(err, &target)")
+	lab.Infof("new XxxException(cause)        ≈  fmt.Errorf(\"...: %w\", err) 或自定义类型 + Unwrap（只负责构造/包装）")
+	lab.Infof("throw / 向上抛出                 ≈  return fmt.Errorf(\"...: %w\", err)")
+	lab.Infof("catch (XxxException e)         ≈  errors.As(err, &target)（对返回的 error 做类型匹配）")
 	lab.Infof("e instanceof Sentinel          ≈  errors.Is(err, ErrSentinel)")
 	lab.Infof("cause chain                    ≈  Unwrap() error / Unwrap() []error")
 	lab.Done()
