@@ -303,6 +303,15 @@ func request(handler http.Handler, method, path, body string) *httptest.Response
 
 func main() {
 	lab := labkit.New("Day 30", "综合服务：HTTP + 事务 + 幂等 + 指标 + trace")
+	lab.Section("框架简介：Chi + GORM + OpenTelemetry + Prometheus")
+	lab.Infof("类型：组合架构")
+	lab.Infof("是什么：把路由、事务、幂等、指标和 trace 组合成一个可运行的转账服务")
+	lab.Infof("解决什么问题：单章学会 API 不等于会设计边界；真正困难的是失败时的原子性、重复请求和可诊断性")
+	lab.Infof("核心抽象：HTTP 入口、DTO 校验、事务、幂等键、乐观锁、problem+json、Counter/Histogram、span")
+	lab.Infof("采用情况：各组件本身都是主流选择；组合方式代表“自拼 Spring Boot”的一种参考实现")
+	lab.Infof("适合：需要理解一个 Go 服务从入口到数据库再到观测面的完整链路")
+	lab.Infof("慎用：示例省略了鉴权、生产迁移、Outbox、TLS、限流和优雅关闭，不能直接当生产模板")
+	lab.Infof("对照：GoFrame 提供全家桶；Kratos 提供微服务底盘；本组合强调可控依赖和清晰边界")
 	db, err := OpenDB("day30")
 	if err != nil {
 		lab.Check(false, "open db: %v", err)

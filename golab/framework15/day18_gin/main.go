@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -31,7 +32,7 @@ var requestSeq atomic.Uint64
 func NewRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
-	router.Use(gin.Recovery())
+	router.Use(gin.RecoveryWithWriter(io.Discard))
 	router.Use(func(c *gin.Context) {
 		c.Header("X-Request-Id", fmt.Sprintf("req-%d", requestSeq.Add(1)))
 		c.Next()
@@ -75,6 +76,15 @@ func request(router http.Handler, method, path, body string) *httptest.ResponseR
 
 func main() {
 	lab := labkit.New("Day 18", "Gin：JSON 绑定、校验与中间件上下文")
+	lab.Section("框架简介：Gin")
+	lab.Infof("类型：Web 框架")
+	lab.Infof("是什么：使用最广的 Go Web 框架之一，提供路由、Context、JSON 绑定、校验和 Recovery")
+	lab.Infof("解决什么问题：快速构建 JSON API，减少请求解析、参数校验和统一响应的样板代码")
+	lab.Infof("核心抽象：Engine、Context、ShouldBindJSON、路由组、中间件、Recovery")
+	lab.Infof("采用情况：约 89k star，全球使用最广的 Go Web 框架之一，生态和教程非常丰富")
+	lab.Infof("适合：业务 API、团队希望开箱即用地处理绑定和校验、能接受 Gin Context 的生命周期模型")
+	lab.Infof("慎用：Gin Context 不是 net/http 标准中间件模型；handler 与框架耦合较深，默认校验只覆盖入口字段")
+	lab.Infof("对照：Chi 更贴近标准库；Echo 能力相近；Fiber 基于 fasthttp，不能直接复用 net/http 中间件")
 	router := NewRouter()
 
 	lab.Section("场景 A：合法订单")

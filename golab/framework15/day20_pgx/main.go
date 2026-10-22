@@ -105,6 +105,15 @@ func flatten(grouped map[string][]Order) []string {
 
 func main() {
 	lab := labkit.New("Day 20", "pgx：批量查询、事务与 CopyFrom")
+	lab.Section("框架简介：pgx")
+	lab.Infof("类型：PostgreSQL 驱动与工具包")
+	lab.Infof("是什么：原生 PostgreSQL 驱动，提供连接池、事务、批量查询、CopyFrom 和 PostgreSQL 类型支持")
+	lab.Infof("解决什么问题：database/sql 的通用抽象会损失 PostgreSQL 特性；N+1 查询和逐行写入也不适合大数据量")
+	lab.Infof("核心抽象：pgxpool.Pool、Begin/Tx、Query/Rows、CopyFrom、CollectRows、PostgreSQL 错误码")
+	lab.Infof("采用情况：约 14k star，是 Go 连接 PostgreSQL 的事实标准之一；高吞吐服务普遍优先选择")
+	lab.Infof("适合：PostgreSQL 专属功能、高吞吐、批量导入、JSONB/数组、LISTEN/NOTIFY")
+	lab.Infof("慎用：pgx 绑定 PostgreSQL，不能无成本切数据库；CopyFrom 只适合批量导入，不替代事务和幂等设计")
+	lab.Infof("对照：lib/pq 已进入维护状态；database/sql 更通用；GORM 可接 pgx，但复杂 SQL 仍应显式写")
 	ctx := context.Background()
 	db, err := pgxmock.NewPool(pgxmock.QueryMatcherOption(pgxmock.QueryMatcherEqual))
 	if err != nil {

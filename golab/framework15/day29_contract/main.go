@@ -80,6 +80,15 @@ func get(handler http.Handler, path string) []byte {
 
 func main() {
 	lab := labkit.New("Day 29", "契约测试：JSON Schema、版本兼容与消费者保护")
+	lab.Section("框架简介：JSON Schema")
+	lab.Infof("类型：契约与验证规范")
+	lab.Infof("是什么：用可执行 schema 描述 JSON 的形状、必填字段、枚举和兼容边界")
+	lab.Infof("解决什么问题：接口字段会随版本漂移；仅靠 Go struct 无法证明实际响应满足消费者合同")
+	lab.Infof("核心抽象：schema、required、additionalProperties、enum、CI 中验证响应和事件 payload")
+	lab.Infof("采用情况：JSON Schema 是跨语言标准；santhosh-tekuri/jsonschema 是 Go 中成熟的实现之一")
+	lab.Infof("适合：对外 API、服务间事件、需要消费者驱动契约和版本兼容检查的团队")
+	lab.Infof("慎用：schema 不能替代领域不变量；严格模式可能拒绝新增字段；要先明确版本兼容策略")
+	lab.Infof("对照：OpenAPI 描述接口，Protobuf 提供二进制契约，Pact 做消费者驱动契约测试")
 	handler := Handler()
 	v1Schema, err := loadSchema("order.v1.json")
 	if err != nil {

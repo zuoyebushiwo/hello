@@ -95,6 +95,15 @@ func (q *TaskQueue) Close() {
 
 func main() {
 	lab := labkit.New("Day 26", "Asynq：Redis 任务队列、重试与幂等")
+	lab.Section("框架简介：Asynq")
+	lab.Infof("类型：Redis 任务队列")
+	lab.Infof("是什么：基于 Redis 的分布式任务队列，支持延迟任务、重试、超时、唯一任务和管理面板")
+	lab.Infof("解决什么问题：HTTP 请求不应同步执行发邮件、生成报表等慢任务；后台任务需要持久化、重试和可观测性")
+	lab.Infof("核心抽象：Client/Task、Server/ServeMux、MaxRetry、TaskID、Timeout、RetryDelayFunc、Inspector")
+	lab.Infof("采用情况：Go 社区常用的 Redis 任务队列之一，具体采用度应以团队基础设施和社区维护状态为准")
+	lab.Infof("适合：异步通知、图片处理、定时/延迟任务、需要独立 worker 扩展的后台作业")
+	lab.Infof("慎用：Redis 必须做持久化和高可用；投递语义仍是至少一次；永久错误应返回 SkipRetry；miniredis 只适合单元测试")
+	lab.Infof("对照：River 使用 PostgreSQL；Temporal 适合复杂工作流；cron 只解决定时触发，不提供可靠队列")
 	received := make(chan EmailPayload, 4)
 	queue, err := NewTaskQueue(2, func(_ context.Context, payload EmailPayload) error {
 		received <- payload

@@ -49,6 +49,15 @@ func (c *UserCache) Len() int     { return c.cache.Len() }
 
 func main() {
 	lab := labkit.New("Day 24", "缓存：LRU、TTL 与 singleflight 防击穿")
+	lab.Section("框架简介：golang-lru + singleflight")
+	lab.Infof("类型：本地缓存组合")
+	lab.Infof("是什么：golang-lru 提供带 TTL 的 LRU 本地缓存，singleflight 合并同一 key 的并发回源")
+	lab.Infof("解决什么问题：热点数据反复查库、缓存无界增长、过期策略缺失，以及缓存失效瞬间的击穿")
+	lab.Infof("核心抽象：LRU 淘汰、TTL、容量上限、loader 回源、singleflight 合并")
+	lab.Infof("采用情况：hashicorp/golang-lru 是成熟常用库；singleflight 来自官方 x/sync")
+	lab.Infof("适合：读多写少、可容忍短暂不一致的配置、字典、用户画像等本地热点数据")
+	lab.Infof("慎用：本地缓存天然多实例不一致；不要缓存余额、权限等强一致数据；要处理穿透、雪崩和热 key")
+	lab.Infof("对照：ristretto 有更复杂的准入策略；bigcache 偏向大堆低 GC；跨实例共享优先 Redis")
 	ctx := context.Background()
 	cache := NewUserCache(2, 50*time.Millisecond)
 

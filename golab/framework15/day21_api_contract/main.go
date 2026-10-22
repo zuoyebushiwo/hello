@@ -147,6 +147,15 @@ func request(handler http.Handler, method, path, body, contentType string) *http
 
 func main() {
 	lab := labkit.New("Day 21", "API 契约：错误模型、严格解码与版本化 DTO")
+	lab.Section("框架简介：net/http + validator")
+	lab.Infof("类型：标准库 + API 契约组合")
+	lab.Infof("是什么：用标准库设计稳定的 HTTP 契约，并用 validator 做入口字段校验")
+	lab.Infof("解决什么问题：错误码、JSON 解码、未知字段和版本化 DTO 如果没有统一约定，客户端会依赖偶然行为")
+	lab.Infof("核心抽象：problem+json、HTTP 状态码、DisallowUnknownFields、DTO 版本化、validator 标签")
+	lab.Infof("采用情况：标准库无采用度问题；go-playground/validator 约 20k star，是 Go 生态的事实标准校验库")
+	lab.Infof("适合：所有对外 API，尤其是多客户端、需要长期兼容和可观测错误的服务")
+	lab.Infof("慎用：严格拒绝未知字段可能破坏旧客户端；不要把内部 err.Error() 原样暴露；版本化不只是改 URL")
+	lab.Infof("对照：OpenAPI 描述接口，JSON Schema 验证响应；gRPC/Protobuf 提供更强契约但工具链更重")
 	handler := NewHandler()
 
 	lab.Section("场景 A：成功响应")

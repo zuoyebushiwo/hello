@@ -104,6 +104,15 @@ func runServe(cmd *cobra.Command, configPath string) error {
 
 func main() {
 	lab := labkit.New("Day 16", "Cobra + Viper：命令行、配置分层与启动校验")
+	lab.Section("框架简介：Cobra + Viper")
+	lab.Infof("类型：命令行框架 + 配置库")
+	lab.Infof("是什么：Cobra 负责命令树、参数和帮助信息；Viper 负责 YAML、环境变量、flag 等多来源配置")
+	lab.Infof("解决什么问题：标准库 flag 适合单命令工具；服务需要 serve/migrate/version 子命令和可预测的配置优先级")
+	lab.Infof("核心抽象：Command/RunE、PersistentFlags、默认值、配置文件、环境变量、命令行覆盖")
+	lab.Infof("采用情况：Cobra 约 45k star，Kubernetes、Hugo 等项目使用；Viper 约 30k star，是常见配置方案")
+	lab.Infof("适合：CLI 工具、需要子命令的后端服务、希望启动配置可审计的团队")
+	lab.Infof("慎用：Viper 不提供依赖注入、生命周期或业务容器，不能当成 Go 的 Spring Boot")
+	lab.Infof("对照：标准库 flag/pflag 更轻；koanf 等配置库更小、更显式")
 
 	lab.Section("场景 A：默认配置")
 	cmd := newRootCommand()

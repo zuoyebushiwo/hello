@@ -103,6 +103,15 @@ func request(handler http.Handler, path string) *httptest.ResponseRecorder {
 
 func main() {
 	lab := labkit.New("Day 23", "可观测性：slog、Prometheus 与 OpenTelemetry")
+	lab.Section("框架简介：slog + Prometheus + OpenTelemetry")
+	lab.Infof("类型：可观测性组合")
+	lab.Infof("是什么：slog 输出结构化日志，Prometheus 采集指标，OpenTelemetry 生成并传播 trace")
+	lab.Infof("解决什么问题：线上问题需要同时回答“发生了什么、量有多大、慢在哪一段”，单一日志或单一指标都不够")
+	lab.Infof("核心抽象：结构化 key-value、Counter/Histogram、Span/Context 传播、route 标签、trace ID 关联")
+	lab.Infof("采用情况：slog 是标准库；Prometheus client_golang 是事实标准；OpenTelemetry Go 是 CNCF 标准，实际采用度高于 star 数")
+	lab.Infof("适合：所有生产服务，尤其是跨服务调用、需要 SLO 和故障定位的系统")
+	lab.Infof("慎用：不要把 user_id、request_id 等高基数标签放进 Prometheus label；日志、指标、trace 不能互相替代")
+	lab.Infof("对照：zap/zerolog 追求更低分配；Prometheus 负责聚合指标，OTel 负责跨服务 trace")
 	exporter := tracetest.NewInMemoryExporter()
 	provider := trace.NewTracerProvider(trace.WithSyncer(exporter))
 	defer provider.Shutdown(context.Background())

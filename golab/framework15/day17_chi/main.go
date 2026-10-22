@@ -89,6 +89,15 @@ func request(handler http.Handler, method, path string) *httptest.ResponseRecord
 
 func main() {
 	lab := labkit.New("Day 17", "Chi：贴近 net/http 的生产级路由与中间件")
+	lab.Section("框架简介：Chi")
+	lab.Infof("类型：轻量 HTTP 路由库")
+	lab.Infof("是什么：直接构建在 net/http 上的路由器，路由参数和中间件都保持标准 http.Handler 语义")
+	lab.Infof("解决什么问题：标准 ServeMux 在复杂路由、分组和中间件组合上不够方便，但又不想引入自定义请求上下文")
+	lab.Infof("核心抽象：Router、Route/Group、URLParam、http.Handler 中间件链、RequestID/Timeout/Recoverer")
+	lab.Infof("采用情况：约 23k star；在强调标准库兼容的 Go 服务和云原生项目中采用较多")
+	lab.Infof("适合：希望复用 net/http/OTel/鉴权中间件，或团队不想被 Web 框架上下文绑定的 API 服务")
+	lab.Infof("慎用：Chi 只解决路由和中间件，JSON 绑定、校验、ORM 都要自己选；中间件顺序会影响超时和恢复行为")
+	lab.Infof("对照：Gin/Echo 提供更完整的上下文和绑定能力；Go 1.22+ 的 ServeMux 已能覆盖简单项目")
 	router := NewRouter()
 
 	lab.Section("场景 A：健康检查与请求 ID")

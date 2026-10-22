@@ -88,6 +88,15 @@ func (b *Bus) Stop() {
 
 func main() {
 	lab := labkit.New("Day 25", "Watermill：事件总线、解耦与至少一次投递")
+	lab.Section("框架简介：Watermill")
+	lab.Infof("类型：事件驱动库")
+	lab.Infof("是什么：用 Publisher/Subscriber/Router 抽象消息流，可切换内存、Kafka、RabbitMQ 等实现")
+	lab.Infof("解决什么问题：业务事件需要解耦发布者和消费者，同时保留消息确认、重试、中间件和生命周期管理")
+	lab.Infof("核心抽象：Publisher、Subscriber、Router、Handler、Message metadata、Ack/Nack")
+	lab.Infof("采用情况：社区常用的事件驱动库，但不是单一大众标准；生产通常按团队既有 broker 选型")
+	lab.Infof("适合：事件通知、服务解耦、简单 saga/CQRS 骨架、需要替换 broker 实现的项目")
+	lab.Infof("慎用：示例的 GoChannel 只在单进程内有效；至少一次投递要求消费者幂等；分区和顺序由真实 broker 决定")
+	lab.Infof("对照：franz-go/Sarama 直接对接 Kafka；NATS 更轻；复杂流处理应使用 Kafka Streams/Flink")
 	logger := watermill.NewSlogLogger(slog.New(slog.NewTextHandler(io.Discard, nil)))
 	bus, err := StartBus(context.Background(), logger)
 	if err != nil {

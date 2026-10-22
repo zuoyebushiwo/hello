@@ -85,6 +85,15 @@ func request(baseURL, method, path, body string) (*http.Response, string) {
 
 func main() {
 	lab := labkit.New("Day 27", "GoFrame：最接近 Spring Boot 的 Go 全家桶")
+	lab.Section("框架简介：GoFrame")
+	lab.Infof("类型：全栈框架")
+	lab.Infof("是什么：提供 HTTP、ORM、配置、校验、日志、命令行和代码生成，是最接近 Spring Boot 体验的 Go 框架")
+	lab.Infof("解决什么问题：团队不想自己拼装十几个库，希望统一项目结构、配置、校验和基础设施")
+	lab.Infof("核心抽象：ghttp.Server、BindHandler、Request/Response、g.Map、g.DB、v tag 校验、gcfg/glog")
+	lab.Infof("采用情况：约 13k star；国内业务系统使用较多，全球主流程度不如 Gin/Chi，但整包体验突出")
+	lab.Infof("适合：CRUD 业务系统、团队希望统一约定、能接受框架绑定和代码生成方式")
+	lab.Infof("慎用：框架绑定较深，升级和替换成本高；全局 g 对象会降低测试可控性；只想找路由器时不要引入全家桶")
+	lab.Infof("对照：Beego 是更老牌的 MVC 全家桶；Gin+自选库更灵活；Kratos 更偏微服务和 proto-first")
 	server, baseURL, err := StartServer("day27-demo")
 	if err != nil {
 		lab.Check(false, "start server: %v", err)

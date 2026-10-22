@@ -126,6 +126,15 @@ func balance(db *gorm.DB, owner string) (int64, error) {
 
 func main() {
 	lab := labkit.New("Day 19", "GORM：事务、幂等键与乐观锁")
+	lab.Section("框架简介：GORM")
+	lab.Infof("类型：ORM")
+	lab.Infof("是什么：Go 最常用的 ORM，提供模型映射、关联、事务、Hook 和多数据库方言")
+	lab.Infof("解决什么问题：常规 CRUD 和关联加载如果全部手写 SQL，样板代码多且容易漏掉事务边界")
+	lab.Infof("核心抽象：DB/Model、Where、Transaction、AutoMigrate、Expr、RowsAffected、方言 Dialector")
+	lab.Infof("采用情况：约 40k star，Go 生态最常用的 ORM 之一；高性能和复杂 SQL 场景经常转向 pgx/sqlx")
+	lab.Infof("适合：CRUD 为主、团队希望统一数据访问方式、查询复杂度可控的业务服务")
+	lab.Infof("慎用：AutoMigrate 不是生产迁移方案；注意 N+1、Save 覆盖、零值更新、事务边界和隐式查询")
+	lab.Infof("对照：pgx 更贴近 PostgreSQL；sqlx 更轻；ent 提供 schema 和代码生成；复杂报表仍应手写 SQL")
 	db, err := OpenDB("day19")
 	if err != nil {
 		lab.Check(false, "open db: %v", err)

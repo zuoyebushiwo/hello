@@ -98,6 +98,15 @@ func RunBounded(ctx context.Context, workers, tasks int, task func(context.Conte
 
 func main() {
 	lab := labkit.New("Day 22", "弹性组合：重试、请求合并与有界 goroutine")
+	lab.Section("框架简介：backoff + singleflight + ants")
+	lab.Infof("类型：弹性与并发工具库")
+	lab.Infof("是什么：backoff 负责重试间隔，singleflight 合并同 key 的并发请求，ants 限制 goroutine 池容量")
+	lab.Infof("解决什么问题：无界重试会放大故障，缓存击穿会打爆后端，无限 goroutine 会耗尽内存和下游连接")
+	lab.Infof("核心抽象：BackOff 策略、PermanentError、singleflight.Group、池化 Submit/Release")
+	lab.Infof("采用情况：backoff 约 4k star 且长期稳定；singleflight 来自官方 x/sync；ants 约 14k star，是常用 goroutine 池")
+	lab.Infof("适合：外部调用重试、热点 key 回源、批量后台任务和需要明确并发上限的服务")
+	lab.Infof("慎用：只重试临时且幂等的操作；必须设置总预算和 jitter；singleflight 只解决单进程竞争，ants 也不等于业务队列")
+	lab.Infof("对照：errgroup/semaphore 更贴近标准库；x/time/rate 适合限流；缓存击穿跨实例仍需分布式锁或租约")
 	ctx := context.Background()
 
 	lab.Section("场景 A：只重试临时错误")
