@@ -1,5 +1,7 @@
 # Go 15 天进阶实验室
 
+> 完成这 15 天后，继续学习独立的 [Go 框架实战 15 天](framework15/README.md)：Cobra/Viper、Chi、Gin、GORM、pgx、Prometheus、OpenTelemetry、Watermill、Asynq、GoFrame 和 Kratos。
+
 这是面向资深 Java 工程师的 Go 进阶路线。目标不是再抄一遍语法，而是把 Java 工程里熟悉的分层、并发、事务、扩展点、可观测性和容错能力，逐一映射到 Go 的惯用写法。
 
 本目录是独立 Go module，只使用标准库，不影响上级 `awesomeProject` 的依赖：

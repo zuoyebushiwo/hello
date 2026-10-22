@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Order v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "customer_id", "amount", "status"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "customer_id": {"type": "string", "minLength": 1},
+    "amount": {"type": "integer", "minimum": 1},
+    "status": {"type": "string", "enum": ["created", "paid", "cancelled"]}
+  }
+}
